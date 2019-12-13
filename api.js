@@ -9,9 +9,10 @@ app.use('/upload',express.static(path.resolve(__dirname,"upload")))
 app.get("/books",function(req,res){
     MongodbClient.connect(dbUrl,{ useUnifiedTopology: true },function(err,client){
         const collection=client.db("DD").collection("books");
-        collection.find({}).toArray(function(err,result){
+        collection.find({}).sort({ updateTime:-1 }).toArray(function(err,result){
             result.forEach((item)=>{
-                item.image = 'http://localhost:3010/'+item.image.replace(/\\/g,'/')
+                item.image = 'http://localhost:3010/'+((item.image).replace(/\\/g,'/'))
+                console.log(item.image)
             })
             res.writeHead(200,{'Content-Type':'application/json'});
             res.write(JSON.stringify(result))
@@ -22,9 +23,10 @@ app.get("/books",function(req,res){
 app.get("/classify",function(req,res){
     MongodbClient.connect(dbUrl,{ useUnifiedTopology: true },function(err,client){
         const collection=client.db("DD").collection("classify");
-        collection.find({}).toArray(function(err,result){
+        collection.find({}).sort({ updateTime:-1 }).toArray(function(err,result){
             result.forEach((item)=>{
-                item.image = 'http://localhost:3010/'+item.image.replace(/\\/g,'/')
+                item.image = 'http://localhost:3010/'+((item.image).replace(/\\/g,'/'))
+                console.log(item.image)
             })
             res.writeHead(200,{'Content-Type':'application/json'});
             res.write(JSON.stringify(result))
