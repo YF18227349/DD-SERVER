@@ -109,11 +109,31 @@
                                 </td>
                             </tr>
                             <%}%>  
-                        <%}else{%>
-                            <tr>
-                                <td class="text-center" colspan="6">暂无数据！请添加</td>
-                            </tr>
-                        <%}%>    
+                            <ul class="pagination">
+                                <%if(isUp){%>
+                                    <li><a href="/?page=<%=page-1%>">上一页</a></li>
+                                <%}else{%>
+                                    <li class="disabled"><span>上一页</span></li>
+                                <%}%>    
+                
+                                <%for(var i=1;i<=total;i++){%>
+                                    <%if(i==page){%>
+                                        <li class="active"><a href="/?page=<%=i%>"><%=i%></a></li>
+                                        <%}else{%>
+                                        <li><a href="/?page=<%=i%>"><%=i%></a></li>
+                                    <%}%>   
+                                <%}%>
+                                <%if(isNext){%>
+                                        <li><a href="/?page=<%=page+1%>">下一页</a></li>
+                                   <%}else{%>
+                                        <li class="disabled"><span>下一页</span></li>
+                                   <%}%>   
+                                </ul>
+                                <%}else{%>
+                                <tr>
+                                    <td class="text-center" colspan="6">暂无数据！请添加</td>
+                                </tr>
+                                <%}%>    
                     </tbody>
                 </table>
             </div>

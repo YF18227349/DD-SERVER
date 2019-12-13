@@ -27,12 +27,41 @@ router.use((req, res, next) => {
     }
 })
 
+// router.get("/",(req,res)=>{
+//     Mongodb.connect(url,(flag,db,client)=>{
+//         var result = db.collection("books").find().sort({ updateTime:-1 })
+//         result.toArray((err,result)=>{
+//            let admin = req.session.username
+//            res.render("index",{result,admin})
+//         })
+//     })
+// })
 router.get("/",(req,res)=>{
     Mongodb.connect(url,(flag,db,client)=>{
-        var result = db.collection("books").find().sort({ updateTime:-1 })
-        result.toArray((err,result)=>{
-           let admin = req.session.username
-           res.render("index",{result,admin})
+        var resu = db.collection("books").find().sort({ updateTime:-1 })
+        resu.count((err,count)=>{
+            var show = 5;
+            var page = 1;
+            if(req.query.page){
+                page = parseInt(req.query.page)
+            }
+            var total = Math.ceil(count/show)
+            isUp = true;
+            isNext = true;
+            if(page==1){
+                isUp = false;
+            }
+            if(page==total){
+                isNext = false;
+            }
+            var ress = db.collection("books").find().sort({ updateTime:-1 })
+            var resul = ress.limit(show).skip(show*(page-1))
+            resul.toArray((err,result)=>{
+                let admin = req.session.username
+                res.render("index",{
+                    result,total,page,isUp,isNext,admin
+                })
+            })
         })
     })
 })
@@ -123,6 +152,7 @@ router.post('/update',(req,res)=>{
             }  
             // var id = (req.headers.referer.split("="))[1]
             var id = fields.id[0]
+            console.log(id)
             db.collection("books").update({_id:require("mongodb").ObjectID(id)},{$set:objFields},(err,result)=>{
                 if(err){
                     return
