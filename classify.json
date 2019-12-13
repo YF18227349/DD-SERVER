@@ -1,0 +1,42 @@
+[
+    {
+        "name": "畅销榜",
+        "image": "upload\\classify1.png"
+    },
+    {
+        "name": "新书榜",
+        "image": "upload\\classify2.png"
+    },
+    {
+        "name": "童书榜",
+        "image": "upload\\classify3.png"
+    },
+    {
+        "name": "今日促销",
+        "image": "upload\\classify4.png"
+    },
+    {
+        "name": "特价书市",
+        "image": "upload\\classify5.png"
+    },
+    {
+        "name": "服装",
+        "image": "upload\\classify6.jpg"
+    },
+    {
+        "name": "当当超市",
+        "image": "upload\\classify7.png"
+    },
+    {
+        "name": "拼团",
+        "image": "upload\\classify8.png"
+    },
+    {
+        "name": "领券中心",
+        "image": "upload\\classify9.png"
+    },
+    {
+        "name": "云阅读",
+        "image": "upload\\classify10.jpg"
+    }
+]
