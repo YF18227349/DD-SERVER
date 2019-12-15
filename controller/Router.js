@@ -19,7 +19,7 @@ router.use((req, res, next) => {
         next();
     } else {
         if (req.url == "/" || req.url == "/edit" || req.url == "/add" || req.url == "/classify" || req.url == "/editclassify" || req.url == "/addclassify") {
-            res.render("wait", { wait: 1, content: "请登录！", href: "/login" })
+            res.render("wait", { wait: 3, content: "请登录！", href: "/login" })
         } else {
             res.locals.session = req.session.username
             return next()
@@ -71,23 +71,26 @@ router.get("/login",(req,res)=>{
 })
 
 // post方式登录表单页面
-router.post("/login" ,urlencodedParser,(req, res) => {
+router.post("/dologin" ,urlencodedParser,(req, res) => {
     let username = req.body.username
     let password = req.body.password
     Mongodb.connect(url,(flag,db,client)=>{
-        var result = db.collection("administrator").find({username:username})
-        result.toArray((err, result) => {
+        var resu = db.collection("administrator").find({username})
+        resu.toArray((err, result) => {
             if (result.length == 0) {
-                res.render("wait", { wait: 1, content: "用户名不存在", href: "/login" })
+                // res.render("wait", { wait: 3, content: "用户名不存在", href: "/login" })
+                res.send('<script>alert("账号不存在");history.back();</script>')
                 console.log("账号不存在")
             } else {
                 if (password != result[0].password) {
-                    res.render("wait", { wait: 1, content: "密码错误", href: "/login" })
+                    res.render("wait", { wait: 3, content: "密码错误", href: "/login" })
+                    // res.send('<script>alert("密码错误");history.back();</script>')
                     console.log("密码错误")
+                    return false;
                 }
                 req.session.username = username
                 res.locals.session = req.session.username
-                // res.render("wait", { wait: 1, content: "登录成功", href: "/" })
+                // res.render("wait", { wait: 3, content: "登录成功", href: "/" })
                 console.log("登录成功")
                 res.redirect("/")
             }
