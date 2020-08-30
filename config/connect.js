@@ -5,7 +5,7 @@ exports.connect = (url,callback)=>{
         if(err){
             return;
         }
-        var db = client.db("DD")
+        var db = client.db("YF")
         callback(1,db,client)
     })
 }

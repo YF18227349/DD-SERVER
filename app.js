@@ -23,7 +23,7 @@ app.use(session({
     resave: true,//重新保存session
     saveUninitialized: true,
     cookie: {
-        maxAge: 6000 * 10
+        maxAge: 6000 * 60
     }
 }))
 
